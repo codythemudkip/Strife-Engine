@@ -102,6 +102,14 @@ Vector2D& Vector2D::Zero()
 	return *this;
 }
 
+Vector2D& Vector2D::Left()
+{
+	this->x = -1;
+	this->y = 0;
+
+	return *this;
+}
+
 std::ostream& operator<<(std::ostream& stream, const Vector2D& vec)
 {
 	stream << "(" << vec.x << "," << vec.y << ")";

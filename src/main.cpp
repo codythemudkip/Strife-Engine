@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     game = new Game();
 
-    game->Init("Strife Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, false);
+    game->Init("Strife Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, false, false);
 
     while (game->running())
     {

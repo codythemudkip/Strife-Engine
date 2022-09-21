@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{2d117e46-6e70-4b62-9d8a-22514f419b14}</ProjectGuid>
-    <RootNamespace>My2DEngine</RootNamespace>
+    <RootNamespace>StrifeEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>StrifeEngine</ProjectName>
   </PropertyGroup>
@@ -160,6 +160,7 @@
     <ClInclude Include="src\ECS\ColliderComponent.h" />
     <ClInclude Include="src\ECS\Components.h" />
     <ClInclude Include="src\ECS\ECS.h" />
+    <ClInclude Include="src\ECS\TileComponent.h" />
     <ClInclude Include="src\ECS\KeyboardController.h" />
     <ClInclude Include="src\ECS\TransformComponent.h" />
     <ClInclude Include="src\ECS\SpriteComponent.h" />

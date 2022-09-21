@@ -11,6 +11,8 @@ Manager manager;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
+std::vector<ColliderComponent*> Game::colliders;
+
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
 
@@ -19,7 +21,7 @@ Game::Game()
 Game::~Game()
 {}
 
-void Game::Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Game::Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, bool splashScreen)
 {
 	int flags = 0;
 	if (fullscreen)
@@ -41,7 +43,9 @@ void Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
 		// game object stuff
 
 		map = new Map();
-		
+
+		Map::LoadMap("Assets/TileMaps/test.map", 16, 16);
+
 		player.addComponent<TransformComponent>();
 		player.addComponent<SpriteComponent>("Assets/Sprites/UI/biscuit.png");
 		player.addComponent<KeyboardController>();
@@ -50,9 +54,22 @@ void Game::Init(const char* title, int xpos, int ypos, int width, int height, bo
 		wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
 		wall.addComponent<SpriteComponent>("Assets/Sprites/UI/zero.png");
 		wall.addComponent<ColliderComponent>("wall");
+
+		Game::SplashScreen(splashScreen);
 	}
 	else {
 		isRunning = false;
+	}
+}
+
+void Game::SplashScreen(bool show)
+{
+	if (show)
+	{
+		auto& StrifeLogo(manager.addEntity());
+		StrifeLogo.addComponent<TransformComponent>(320.0f - 147.0f, 240.0f - 102.0f, 294.0f, 204.0f, 1);
+		StrifeLogo.addComponent<SpriteComponent>("./StrifeEngineLogo.png");
+
 	}
 }
 
@@ -74,17 +91,17 @@ void Game::Update()
 	manager.refresh();
 	manager.update();
 
-	if (Collision::AABB(player.getComponent<ColliderComponent>().collider, wall.getComponent<ColliderComponent>().collider))
+	for (auto cc : colliders)
 	{
-		player.getComponent<TransformComponent>().velocity * -1;
-		std::cout << "Wall hit" << std::endl;
+		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
 	}
+	
 }
 
 void Game::Render()
 {
 	SDL_RenderClear(renderer);
-	map->DrawMap();
+	//map->DrawMap();
 	manager.draw();
 	SDL_RenderPresent(renderer);
 }
@@ -94,4 +111,10 @@ void Game::Clean()
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
+}
+
+void Game::AddTile(int id, int x, int y)
+{
+	auto& tile(manager.addEntity());
+	tile.addComponent<TileComponent>(x, y, 32, 32, id);
 }

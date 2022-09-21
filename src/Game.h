@@ -1,6 +1,9 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <vector>
+
+class ColliderComponent;
 
 class Game
 {
@@ -8,7 +11,8 @@ public:
 	Game();
 	~Game();
 
-	void Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+	void Init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen, bool splashScreen = true);
+	void SplashScreen(bool show);
 
 	void HandleEvents();
 	void Update();
@@ -16,8 +20,11 @@ public:
 	void Render();
 	void Clean();
 
+	static void AddTile(int id, int x, int y);
+
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
+	static std::vector<ColliderComponent*> colliders;
 
 private:
 	int cnt = 0;

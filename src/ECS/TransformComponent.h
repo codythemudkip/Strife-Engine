@@ -7,6 +7,7 @@ class TransformComponent : public Component
 public:
 	Vector2D position;
 	Vector2D velocity;
+	Vector2D origin;
 
 	int height = 32;
 	int width = 32;
@@ -31,7 +32,7 @@ public:
 		position.y = y;
 	}
 
-	TransformComponent(float x, float y, int h, int w, int sc)
+	TransformComponent(float x, float y, int w, int h, int sc)
 	{
 		position.x = x;
 		position.y = y;
@@ -43,6 +44,7 @@ public:
 	void init() override
 	{
 		velocity.Zero();
+		origin.Zero();
 	}
 
 	void update() override
